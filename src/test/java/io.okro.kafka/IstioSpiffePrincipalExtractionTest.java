@@ -13,7 +13,6 @@ public class IstioSpiffePrincipalExtractionTest {
 
     @Test
     public void TestLoadValidIstioSpiffeId() {
-        Properties originalProperties = System.getProperties();
         String expectedNamespace = "namespace";
         String expectedServiceAccount = "account";
         String expectedNsAndSa = String.format("%s-%s", expectedNamespace, expectedServiceAccount);
@@ -46,12 +45,16 @@ public class IstioSpiffePrincipalExtractionTest {
         assertEquals(String.format("CN=%s", expectedNsAndSa),
                 builder.loadSpiffeId(Collections.singleton(ids)));
 
-        System.setProperties(originalProperties);
+        System.clearProperty(SpiffePrincipalBuilder.KAFKA_SPIFFE_PRINCIPAL_ISTIO_MODE_PROPERTY);
+        System.clearProperty(SpiffePrincipalBuilder.KAFKA_SPIFFE_PRINCIPAL_PREFIX_PROPERTY);
+
+        // fall back to the default processing mode:
+        assertEquals(inputSpiffeId,
+                builder.loadSpiffeId(Collections.singleton(ids)));
     }
 
     @Test
     public void TestLoadInvalidValidIstioSpiffeId() {
-        Properties originalProperties = System.getProperties();
         String inputSpiffeId = "spiffe://ns/namespace/sa/account";
 
         Vector<String> ids = new Vector<>();
@@ -69,7 +72,7 @@ public class IstioSpiffePrincipalExtractionTest {
         System.setProperty(SpiffePrincipalBuilder.KAFKA_SPIFFE_PRINCIPAL_ISTIO_MODE_PROPERTY, "sa");
         assertNull(builder.loadSpiffeId(Collections.singleton(ids)));
 
-        System.setProperties(originalProperties);
+        System.clearProperty(SpiffePrincipalBuilder.KAFKA_SPIFFE_PRINCIPAL_PREFIX_PROPERTY);
     }
 
 }

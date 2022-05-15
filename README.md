@@ -25,6 +25,9 @@ To configure this principal provider to extract identities from Istio, set the `
 
 - `ns`: extract namespace only,
 - `sa`: extract service account only,
-- `ns+sa`: extract namespace and service account, values joined with `-`.
+- `ns+sa`: extract namespace and service account, values joined with `-`,
+- `any other value`: invalid state, returns a `null` principal name.
 
 Optionally, provide a string prefix for the extracted principal using `KAFKA_SPIFFE_PRINCIPAL_PREFIX` environment variable or `kafka.spiffe.principal.prefix` system property. For example, for ID `spiffe://cluster.dns/ns/namespace/sa/account`, with mode `ns+sa` and prefix `CN=`, the result will be `CN=namespace-account`.
+
+To disable this type of processing, unset `KAFKA_SPIFFE_PRINCIPAL_ISTIO_MODE` and `kafka.spiffe.principal.istio.mode`.
