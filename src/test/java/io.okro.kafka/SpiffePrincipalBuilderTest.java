@@ -15,8 +15,9 @@ import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
+import java.util.*;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -85,4 +86,5 @@ public class SpiffePrincipalBuilderTest {
 
         assertEquals(KafkaPrincipal.ANONYMOUS, principal);
     }
+
 }
