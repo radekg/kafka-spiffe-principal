@@ -45,7 +45,8 @@ public class SpiffePrincipalBuilderTest {
         SslAuthenticationContext context = mockedSslContext("spiffe-cert.pem");
         KafkaPrincipal principal = new SpiffePrincipalBuilder().build(context);
 
-        assertEquals("SPIFFE", principal.getPrincipalType());
+        // assertEquals("SPIFFE", principal.getPrincipalType());
+        assertEquals(KafkaPrincipal.USER_TYPE, principal.getPrincipalType());
         assertEquals(principal.getName(), "spiffe://srv1.okro.io");
     }
 
