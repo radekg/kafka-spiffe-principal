@@ -46,7 +46,7 @@ public class SpiffePrincipalBuilder implements KafkaPrincipalBuilder, KafkaPrinc
 
         String spiffeId = spiffeId(cert);
         if (spiffeId == null) {
-            LOG.info("SpiffePrincipal: there was no spiffeId, falling back to the subject principal");
+            LOG.trace("SpiffePrincipal: there was no spiffeId, falling back to the subject principal");
             return new KafkaPrincipal(KafkaPrincipal.USER_TYPE, cert.getSubjectX500Principal().getName());
         }
 
